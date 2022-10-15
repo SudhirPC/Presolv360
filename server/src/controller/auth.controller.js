@@ -38,7 +38,15 @@ router.post('/register', (req, res) => {
     }
   })
 })
-
+//  ------------ get data of user by admin controller-----------
+router.get('/:id', async (req, res) => {
+  try {
+    const data = await User.findById(req.params.id).lean().exec()
+    res.status(200).json(data)
+  } catch (error) {
+    console.log(error)
+  }
+})
 
 
 module.exports = router
