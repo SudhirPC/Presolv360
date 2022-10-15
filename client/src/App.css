@@ -29,3 +29,27 @@
     margin-top:-5px;
     margin-right: 4px;
 }
+
+#formtask{
+    margin-top: 100px;
+    height:600px;
+    border:1px solid #1d3d6d;
+}
+select{
+    border-radius: 25px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+textarea{
+    border-radius: 25px;
+    padding-right: 10px;
+    padding-left: 10px;
+    /* margin-bottom: 15px; */
+}
+
+.inputElemtextarea{
+    display: flex;
+    flex-direction: column;
+    height: 7rem;
+    position:relative;
+}

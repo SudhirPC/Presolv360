@@ -35,7 +35,7 @@
 .inputElem{
   display: flex;
   flex-direction: column;
-  height: 5rem;
+  height: 5.2rem;
   position:relative;
 }
 .inputElem input{

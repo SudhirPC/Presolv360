@@ -34,8 +34,8 @@ export const Login = () => {
     axios
       .post("http://localhost:3755/login", user)
       .then((res) => {
-        console.log(res.data);
-
+        console.log("login",res.data);
+        localStorage.setItem("user",JSON.stringify(res.data.user));
         toast("Login successfully", {
           type: "success",
         });
