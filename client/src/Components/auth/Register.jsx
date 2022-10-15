@@ -33,7 +33,7 @@ const register = () => {
   axios
     .post("http://localhost:3755/register", user)
     .then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
 
       toast("Registered successfully", {
         type: "success",
@@ -117,7 +117,7 @@ const validateForm = (user) => {
               />
             </div>
             <div className="loginButtonDiv">
-              <button className="loginButton" onClick={() => register()}>
+              <button className="loginButton -mt-4" onClick={() => register()}>
                 Register
               </button>
             </div>

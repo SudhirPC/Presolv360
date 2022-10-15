@@ -1,21 +1,41 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { TaskForm } from "./Form.jsx";
+import { ToastContainer, toast } from "react-toastify";
+import TaskCard from "./TaskCard.jsx";
+
 export const Dashboard = () => {
   const [data, setData] = useState([]);
   const [user, setUsersetData] = useState(null);
+  const [taskarr, setTaskarr] = useState(null);
   const [visible, setVisible] = useState(false);
 
-  const fetchTask = () => {
-    setUsersetData(JSON.parse(localStorage.getItem("user")));
-  };
 
+  
+// fetch user changed
+  const fetchUser = () => {
+
+    let userDetails= JSON.parse(localStorage.getItem("user"));
+    axios
+    .get(`http://localhost:3755/${userDetails._id}`)
+    .then((res) => {
+      console.log(res.data,"userData");
+      setUsersetData(res?.data);
+      setTaskarr(res?.data?.task)
+    })
+    .catch(function (err) {
+      toast("Something is Wrong", {
+        type: "error",
+      });
+    });
+  };
+  console.log("taskarr", taskarr);
   const visibleform = () => {
     setVisible(true);
   };
 
   useEffect(() => {
-    fetchTask();
+    fetchUser();
   }, []);
   console.log("dashboarddata", user);
   return (
@@ -24,7 +44,7 @@ export const Dashboard = () => {
         <div className="flex">
           <img className="h-14" src="./adminlogo.png" alt="" />
           <i>
-            <h1 className="text-xl mt-3 ml-1">Hii UserName</h1>
+            <h1 className="text-xl mt-3 ml-1">Hii {user?.name}</h1>
           </i>
         </div>
         <div>
@@ -42,25 +62,21 @@ export const Dashboard = () => {
         </div>
       </div>
       {/* //******----------task form----------- */}
-      {/* <div className="Taskform">
-
-
-      </div> */}
-      {visible ? <TaskForm setVisible={setVisible} visible={visible}/> : null}
+      {/* //!passed task arr */}
+      {visible ? <TaskForm setVisible={setVisible} taskarr={taskarr}  /> : null}   
 
       <div className="dashboard w-11/12 h-auto border-2 border-red-400 ">
         <div className="dashboardtop w-full flex justify-between mt-4 mb-4">
-          <div className="w-1/3">
-            <img src="./todo-dash.gif" alt="" />
-          </div>
-          <div className="w-2/3  border-2 border-yellow-500">
-            <div className="grid grid-cols-2">
-              <div className="border-2 bg-red-300 h-32">DIV 1</div>
-              <div className="border-2 bg-red-300 h-32">DIV 1</div>
-              <div className="border-2 bg-red-300 h-32">DIV 1</div>
-              <div className="border-2 bg-red-300 h-32">DIV 1</div>
-              <div className="border-2 bg-red-300 h-32">DIV 1</div>
-              <div className="border-2 bg-red-300 h-32">DIV 1</div>
+  
+          <div className="w-full">
+            <i><h1>{}</h1></i>
+            <div className="grid grid-cols-3 gap-2">
+              {taskarr?.map((e) => {
+                return (
+                  // imported taskcard
+                  <TaskCard key={e.id} e={e}/>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -68,3 +84,5 @@ export const Dashboard = () => {
     </div>
   );
 };
+
+

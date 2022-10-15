@@ -1,12 +1,15 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export const TaskForm = (props) => {
-  console.log(props)
-  const navigate = useNavigate();
+  console.log(props,"PROPS")
+
+  const [user, setUsersetData] = useState(null);
+  //id added
   const [postobj, setPostobj] = useState({
+    id: props?.taskarr?.length +1,
     taskname: "",
     description: "",
     developer: "",
@@ -15,6 +18,7 @@ export const TaskForm = (props) => {
   });
   const [submit, setSubmit] = useState(false);
   const [formError, setFormError] = useState({});
+  const[trigger,setTrigger] = useState(false);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setPostobj({
@@ -31,24 +35,36 @@ export const TaskForm = (props) => {
   };
 
   const AddTask = () => {
-    // axios
-    //   .post(`http://localhost:3755/taskadd/${e.id}`, postobj)
-    //   .then((res) => {
-    //     console.log(res.data);
-    //     toast("Task Added successfully", {
-    //       type: "success",
-    //     });
-    //     setTimeout(() => {
-    //       navigate("/dashboard");
-    //     }, 3000);
-    //   })
-    //   .catch(function (err) {
-    //     toast("Something is Wrong", {
-    //       type: "error",
-    //     });
-    //   });
-   props.setVisible(false);
+    axios
+      .post(`http://localhost:3755/taskadd/${user._id}`, postobj)
+      .then((res) => {
+        console.log(res.data);
+        // setTrigger(true)
+        toast("Task Added successfully", {
+          type: "success",
+          
+        });
+        
+      }).then((res) => {
+        props.setVisible(false);
+        fetchTask()
+      })
+      .catch(function (err) {
+        toast("Something is Wrong", {
+          type: "error",
+        });
+      });
+   
   };
+  const fetchTask = () => {
+    setUsersetData(JSON.parse(localStorage.getItem("user")));
+
+  };
+  console.log("formuserdataloggedin", user);
+  useEffect(() => {
+    fetchTask();
+  }, [user]);
+
 
   const validateForm = (postobj) => {
     const error = {};
@@ -135,7 +151,7 @@ export const TaskForm = (props) => {
                   value={postobj.developer}
                 >
                   <option value="">Select Developer</option>
-                  <option value="UserName">UserName</option>
+                  {/* <option value={user?.name}>{user?.name}</option> */}
                   <option value="prashant">Prashant Presolv360</option>
                   <option value="sudhir">Sudhir P Chavhan</option>
                   <option value="suman">Suman Giri</option>
