@@ -70,18 +70,18 @@ export const Login = () => {
     return error;
   };
   return (
-    <div className="loginContainer">
-      <div className="loginWrapper">
-        <div className="loginFormContainer">
+    <div className="loginContainer -mt-24">
+      <div className="loginWrapper ">
+        <div className="loginFormContainer ">
           <div className="loginHeader">
-            <h2>Login to Continue</h2>
+           <i> <h2>Login to Continue</h2></i>
           </div>
           <form action="login" className="loginForm" onSubmit={handleSubmit}>
             <div className="inputElem">
-              <label htmlFor="email">Enter Email Id</label>
+              <label htmlFor="email">Email Address</label>
               <input
                 type="text"
-                placeholder="email address"
+                placeholder="Enter Email Address"
                 onChange={handleChange}
                 value={user.email}
                 name="email"
@@ -89,10 +89,10 @@ export const Login = () => {
               <span className="inputError">{formError.email}</span>
             </div>
             <div className="inputElem">
-              <label htmlFor="Enter Password">Enter Password</label>
+              <label htmlFor="Enter Password">Password</label>
               <input
                 type="password"
-                placeholder="password"
+                placeholder="Enter Password"
                 onChange={handleChange}
                 value={user.password}
                 name="password"
@@ -103,7 +103,7 @@ export const Login = () => {
               <label htmlFor="Confirm Password">Confirm Password</label>
               <input
                 type="password"
-                placeholder="reEnterPassword"
+                placeholder="Confirm Password "
                 onChange={handleChange}
                 value={user.reEnterPassword}
                 name="reEnterPassword"
@@ -123,55 +123,10 @@ export const Login = () => {
             <ToastContainer />
           </form>
         </div>
-        <div className="loginImage">
-          <img src="./admin.gif" alt="" />
+        <div className="loginImage  ">
+          <img className=" " src="./admin.gif" alt="" />
         </div>
       </div>
     </div>
   );
 };
-
-{
-  /* <div className=" flex w-4/5 justify-around m-auto mt-16 mb-16">
-//       <div className="login mb-28 w-1/2 ml-48 ">
-//       {console.log(user)}
-//       <h1 className="text-2xl font-semibold">Login</h1>
-//       <input 
-//         type="text"
-//         name="email"
-//         value={user.email}
-//         onChange={handleChange}
-//         placeholder="Enter your Email"
-//       ></input>
-//       <input
-//         type="password"
-//         name="password"
-//         value={user.password}
-//         onChange={handleChange}
-//         placeholder="Enter your Password"
-//       ></input>
-//       <div >
-//         {" "}
-//         <button
-//           onClick={() => {
-//             login();
-//           }}
-//           className="p-2 pl-28 pr-28 bg-blue-500 h-10 rounded-md text-white  text-xl "
-//         >
-//           Login
-//         </button>
-//         <ToastContainer/>
-//       </div>
-//       <div>OR</div>
-//       <Link to="/">
-//         {" "}
-//         <button className="p-2 pl-28 pr-24 bg-blue-500 h-10 rounded-md text-white  text-xl ">
-//           Register
-//         </button>{" "}
-//       </Link>
-//       </div>
-//       <div className="w-1/2 ml-24">
-//     <img className="h-96 w-96" src="./login.gif" alt="logingif" />
-// </div>
-//     </div>*/
-}

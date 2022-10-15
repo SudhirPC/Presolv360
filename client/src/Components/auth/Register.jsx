@@ -69,12 +69,11 @@ const validateForm = (user) => {
   return error;
 };
   return (
-    // <div className="flex w-4/5 registermain justify-around m-auto mt-10 h-auto">
-    <div className="loginContainer">
+    <div className="loginContainer -mt-24">
       <div className="loginWrapper">
         <div className="loginFormContainer">
           <div className="loginHeader">
-            <h2>Registration Page</h2>
+            <i><h2>Registration Page</h2></i>
           </div>
           <form action="login" className="loginForm" onSubmit={handleSubmit}>
             <div className="inputElem">
@@ -108,7 +107,7 @@ const validateForm = (user) => {
               />
             </div>
             <div className="inputElem">
-              <label htmlFor="confirm password">Confirm password</label>
+              <label htmlFor="confirm password">Confirm Password</label>
               <input
                 type="password"
                 placeholder="Confirm Password"
@@ -130,37 +129,15 @@ const validateForm = (user) => {
               Join our community!
             </h1>
           </i>
-          <p className="mt-1 mb-1 text-xl ">
+          <p className="mt-1 mb-1 text-xl pl-1 pr-1">
             We are connecting the world, be a part of our community by
             registering on our website.
           </p>
-          <img className="" src="./admin.gif" alt="" />
+          <img className=" w-full" src="./admin.gif" alt="" />
         </div>
         <ToastContainer />
       </div>
     </div>
-    // </div>
+    
   );
 };
-
-{
-  /* <div>
-            <div className="register w-1/2 h-auto ml-24">
-            {console.log( user)}
-            <h1 className="text-2xl font-semibold">Register</h1>
-            <input className="h-16 text-2xl font-semibold" type="text" name="name" value={user.name} placeholder="Your Name" onChange={ handleChange }/>
-            <input type="text" name="email" value={user.email} placeholder="Your Email" onChange={ handleChange }/>
-            <input type="password" name="password" value={user.password} placeholder="Your Password" onChange={ handleChange }/>
-            <input type="password" name="confirmPassword" value={user.confirmPassword} placeholder="Re-enter Password" onChange={ handleChange }/>
-           <button className="p-2 pl-24 pr-24 clicabledivRegsiter bg-blue-500 h-10 rounded-md text-white  text-xl" onClick={register} >Register</button>
-           <ToastContainer/>
-            <div>OR</div>
-            <Link to="/login"> <div className="p-2 pl-36 pr-28 clicablediv bg-blue-500 h-10 rounded-md text-white  text-xl ">Login</div> </Link>
-            </div>
-            {/* <button className="mb-8 w-1/2 ml-48 " >
-            <img src="./register.gif" alt="registergif" />
-            </button> */
-}
-{
-  /* </div>   */
-}
