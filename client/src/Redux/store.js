@@ -9,11 +9,10 @@ import thunk from "redux-thunk";
 import { DailyTasks } from "./reducer.js";
 
 const rootReducer = combineReducers({ dailytasks: DailyTasks });
-
+const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;
 export const store = legacy_createStore(
   rootReducer,
-  compose(
-    applyMiddleware(thunk),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  composeEnhancers(
+    applyMiddleware(thunk)
   )
 );

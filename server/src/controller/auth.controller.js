@@ -42,7 +42,7 @@ router.post('/register', (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const data = await User.findById(req.params.id).lean().exec()
-   console.log("g",data)
+  //  console.log("g",data)
     res.status(200).json(data)
   } catch (error) {
     console.log(error)
