@@ -4,7 +4,7 @@ const Port = process.env.PORT || 3755
 var cors = require('cors')
 const app=express();
 app.use(express.json());
-
+app.use(cors)
 
 const loginAuth=require("./controller/auth.controller.js")
 app.use("/",loginAuth)
