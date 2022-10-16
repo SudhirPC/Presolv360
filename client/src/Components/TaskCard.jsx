@@ -28,9 +28,10 @@ const togglestatus = ( statuses,ids) => {
 
 const fetchUser = () => {
   axios
-  .get(`http://localhost:3755/${userdata?._id}`)
+  .get(`https://presolv360bysudhir.herokuapp.com/${userdata?._id}`)
   .then((res) => {
-    dispatch(fetchuser(res.data.user))
+    console.log("restaskcard",res)
+    dispatch(fetchuser(res.data))
   })
   .catch(function (err) {
     toast("Something is Wrong", {
