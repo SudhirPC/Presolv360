@@ -4,16 +4,15 @@ import { useNavigate } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchuser } from "../Redux/action.js";
 
 export const TaskForm = (props) => {
   const userdata = useSelector((state) => state.dailytasks.user);
-  console.log(props,"PROPS")
-let navigate=useNavigate()
-
+  let navigate = useNavigate();
+  const dispatch = useDispatch();
   const [user, setUsersetData] = useState(null);
-  //id added
   const [postobj, setPostobj] = useState({
-    id: props?.taskarr?.length +1,
+    id: userdata?.task?.length + 1,
     taskname: "",
     description: "",
     developer: "",
@@ -22,7 +21,7 @@ let navigate=useNavigate()
   });
   const [submit, setSubmit] = useState(false);
   const [formError, setFormError] = useState({});
-  const[trigger,setTrigger] = useState(false);
+  const [trigger, setTrigger] = useState(false);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setPostobj({
@@ -36,42 +35,46 @@ let navigate=useNavigate()
     e.preventDefault();
     setFormError(validateForm(postobj));
     setSubmit(true);
+    AddTask();
   };
 
   const AddTask = () => {
     axios
-      .post(`http://localhost:3755/taskadd/${userdata?._id}`, postobj)
+      .post(
+        `https://presolv360bysudhir.herokuapp.com/taskadd/${userdata?._id}`,
+        postobj
+      )
       .then((res) => {
-        
-        console.log(res.data);
-        // setTrigger(true)
         toast("Task Added successfully", {
           type: "success",
-          
         });
-        
-        
+
+        fetchTask();
+      })
+      .then((res) => {
+        console.log("navigate");
+        navigate("/dashboard");
       })
       .catch(function (err) {
         toast("Something is Wrong", {
           type: "error",
         });
       });
-      
   };
 
-  const navigatetodashboard=()=>{
-    navigate("/dashboard");
-  }
   const fetchTask = () => {
-    setUsersetData(JSON.parse(localStorage.getItem("user")));
-
+    axios
+      .get(`https://presolv360bysudhir.herokuapp.com/${userdata?._id}`)
+      .then((res) => {
+        console.log("restaskcard", res);
+        dispatch(fetchuser(res.data));
+      })
+      .catch(function (err) {
+        toast("Something is Wrong fetchtask", {
+          type: "error",
+        });
+      });
   };
-  console.log("formuserdataloggedin", user);
-  useEffect(() => {
-    fetchTask();
-  }, []);
-
 
   const validateForm = (postobj) => {
     const error = {};
@@ -79,20 +82,20 @@ let navigate=useNavigate()
       error.taskname = "Task-Title required maximum 100 characters";
     }
     if (!postobj.taskname) {
-        error.taskname = "Task-Title required !";
-      }
-      if ( postobj.taskname.length  >100) {
-        error.taskname = "Task-Title required maximum 100 characters";
-      }
+      error.taskname = "Task-Title required !";
+    }
+    if (postobj.taskname.length > 100) {
+      error.taskname = "Task-Title required maximum 100 characters";
+    }
     if (!postobj.description && postobj.description.length > 500) {
       error.description = " Task- description required maximum 500 characters";
     }
     if (!postobj.description) {
-        error.description = "Task-description required !";
-      }
-      if ( postobj.description.length  >500) {
-        error.description = "Task-description required maximum 500 characters";
-      }
+      error.description = "Task-description required !";
+    }
+    if (postobj.description.length > 500) {
+      error.description = "Task-description required maximum 500 characters";
+    }
     if (!postobj.developer) {
       error.developer = "Developer is required!";
     }
@@ -102,7 +105,7 @@ let navigate=useNavigate()
 
     return error;
   };
-  console.log("postobj", postobj);
+
   return (
     <div>
       <div className="loginContainer -mt-24 ">
@@ -143,10 +146,12 @@ let navigate=useNavigate()
                   placeholder="Enter Detail Information about Task"
                 ></textarea>
                 <br />
-                <span className="inputError pt-14">{formError.description}</span>
+                <span className="inputError pt-14">
+                  {formError.description}
+                </span>
               </div>
-              
-                <br />
+
+              <br />
               <div className="inputElem -mt-4">
                 <label htmlFor="developer">Select Developer</label>
                 <select
@@ -158,7 +163,6 @@ let navigate=useNavigate()
                   value={postobj.developer}
                 >
                   <option value="">Select Developer</option>
-                  {/* <option value={user?.name}>{user?.name}</option> */}
                   <option value="prashant">Prashant Presolv360</option>
                   <option value="sudhir">Sudhir P Chavhan</option>
                   <option value="suman">Suman Giri</option>
@@ -193,20 +197,10 @@ let navigate=useNavigate()
                   <option value={true}>Complete</option>
                   <option value={false}>Pending</option>
                 </select>
-
-        
               </div>
 
               <div className="loginButtonDiv">
-                <button
-                  className="loginButton"
-                  onClick={() => {
-                    AddTask();
-                    navigatetodashboard()
-                  }}
-                >
-                  Add Task
-                </button>
+                <button className="loginButton">Add Task</button>
               </div>
               <ToastContainer />
             </form>

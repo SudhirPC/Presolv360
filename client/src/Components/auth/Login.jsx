@@ -4,9 +4,8 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import {  loginUser, loginUserName } from "../../Redux/action.js";
+import { loginUser, loginUserName } from "../../Redux/action.js";
 import "react-toastify/dist/ReactToastify.css";
-
 
 export const Login = () => {
   const userdata = useSelector((state) => state.dailytasks.user);
@@ -35,13 +34,12 @@ export const Login = () => {
   };
 
   const login = () => {
-
     axios
-      .post("http://localhost:3755/login", user)
+      .post("https://presolv360bysudhir.herokuapp.com/login", user)
       .then((res) => {
         // console.log("login",res.data);
 
-        dispatch(loginUser(res.data.user))
+        dispatch(loginUser(res.data.user));
         toast("Login successfully", {
           type: "success",
         });
@@ -80,7 +78,10 @@ export const Login = () => {
       <div className="loginWrapper ">
         <div className="loginFormContainer ">
           <div className="loginHeader">
-           <i> <h2>Login to Continue</h2></i>
+            <i>
+              {" "}
+              <h2>Login to Continue</h2>
+            </i>
           </div>
           <form action="login" className="loginForm" onSubmit={handleSubmit}>
             <div className="inputElem">

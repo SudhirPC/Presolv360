@@ -1,7 +1,6 @@
 import * as types from "./actiontype.js";
 import axios from "axios";
 
-
 //---------- login user ----------
 
 export const loginUserName = (payload) => {
@@ -16,8 +15,6 @@ export const loginUser = (payload) => {
     payload,
   };
 };
-
-
 
 export const Logouthandleraction = (payload) => {
   return {

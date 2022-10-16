@@ -5,15 +5,14 @@ const init = {
   userId: null,
   error: "",
   userName: null,
-  user:null
-
+  user: null,
 };
 
 export const DailyTasks = (state = init, action) => {
   const { type, payload } = action;
 
   switch (type) {
-     case types.GETUSERID:
+    case types.GETUSERID:
       return {
         ...state,
         user: payload,
@@ -30,7 +29,7 @@ export const DailyTasks = (state = init, action) => {
         userId: null,
         userName: null,
       };
- 
+
     default:
       return state;
   }
