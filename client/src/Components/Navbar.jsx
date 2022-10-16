@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
+import { useDispatch, useSelector } from "react-redux";
+import { Logouthandleraction } from "../Redux/action.js";
 export const Navbar = () => {
+
+const userdata = useSelector((state) => state.dailytasks.user);
+console.log("navbar",userdata);
   const [user, setUser] = useState(null);
   const [logVisible, setVisible] = useState(false);
+  let dispatch=useDispatch()
   const fetchTask = () => {
     setUser(JSON.parse(localStorage.getItem("user")));
       setVisible(true);
@@ -15,8 +20,8 @@ export const Navbar = () => {
   }, [logVisible]);
 
   const handlelogout = () => {
-    window.localStorage.user = null;
     setVisible(false);
+    dispatch(Logouthandleraction());
     navigate("/");
   };
   return (
@@ -43,13 +48,8 @@ export const Navbar = () => {
             <h1 className="text-2xl font-semibold mt-4">Register</h1>
           </Link>
         </i>
-        <i>
-          <Link to="/login">
-            {" "}
-            <h1 className="text-2xl font-semibold mt-4">Login</h1>
-          </Link>
-        </i>
-        {user?.name ? (
+      
+        {userdata?.name ? (
           <i>
             <h1
               className="text-2xl font-semibold mt-4 cursor-pointer"
@@ -60,8 +60,11 @@ export const Navbar = () => {
           </i>
         ) : (
           <i>
-            <h1 className=""></h1>
-          </i>
+          <Link to="/login">
+            {" "}
+            <h1 className="text-2xl font-semibold mt-4">Login</h1>
+          </Link>
+        </i>
         )}
       </div>
     </div>

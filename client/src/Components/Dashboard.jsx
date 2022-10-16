@@ -3,48 +3,32 @@ import axios from "axios";
 import { TaskForm } from "./Form.jsx";
 import { ToastContainer, toast } from "react-toastify";
 import TaskCard from "./TaskCard.jsx";
+import { FirstHChart } from "./Statistics.jsx";
+import {useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 
 export const Dashboard = () => {
+  const userdata = useSelector((state) => state.dailytasks.user);
+  const taskarr = userdata?.task;
+  console.log("reduxUser",userdata)
+  let navigate=useNavigate()
   const [data, setData] = useState([]);
-  const [user, setUsersetData] = useState(null);
-  const [taskarr, setTaskarr] = useState(null);
+
   const [visible, setVisible] = useState(false);
 
 
-  
-// fetch user changed
-  const fetchUser = () => {
-
-    let userDetails= JSON.parse(localStorage.getItem("user"));
-    axios
-    .get(`http://localhost:3755/${userDetails._id}`)
-    .then((res) => {
-      console.log(res.data,"userData");
-      setUsersetData(res?.data);
-      setTaskarr(res?.data?.task)
-    })
-    .catch(function (err) {
-      toast("Something is Wrong", {
-        type: "error",
-      });
-    });
-  };
-  console.log("taskarr", taskarr);
+  // console.log("taskarr", taskarr);
   const visibleform = () => {
     setVisible(true);
+    navigate("/form")
   };
-
-  useEffect(() => {
-    fetchUser();
-  }, []);
-  console.log("dashboarddata", user);
   return (
     <div>
       <div className=" dashboardtop w-11/12 pt-2 pb-2 flex justify-around mt-4 mb-4">
         <div className="flex">
           <img className="h-14" src="./adminlogo.png" alt="" />
           <i>
-            <h1 className="text-xl mt-3 ml-1">Hii {user?.name}</h1>
+            <h1 className="text-xl mt-3 ml-1">Hii {userdata?.name}</h1>
           </i>
         </div>
         <div>
@@ -62,8 +46,7 @@ export const Dashboard = () => {
         </div>
       </div>
       {/* //******----------task form----------- */}
-      {/* //!passed task arr */}
-      {visible ? <TaskForm setVisible={setVisible} taskarr={taskarr}  /> : null}   
+      {/* {visible ? <TaskForm  taskarr={taskarr}  /> : null}    */}
 
       <div className="dashboard w-11/12 h-auto border-2 border-red-400 ">
         <div className="dashboardtop w-full flex justify-between mt-4 mb-4">
@@ -73,7 +56,7 @@ export const Dashboard = () => {
             <div className="grid grid-cols-3 gap-2">
               {taskarr?.map((e) => {
                 return (
-                  // imported taskcard
+                  
                   <TaskCard key={e.id} e={e}/>
                 );
               })}
@@ -81,6 +64,15 @@ export const Dashboard = () => {
           </div>
         </div>
       </div>
+     <div className="w-1/2 h-36 m-auto mt-14">
+      <div className="flex">
+        <div>
+              <h1>Details of Acitivity</h1>
+        </div>
+      <FirstHChart props={userdata}/>
+      </div>
+   
+     </div>
     </div>
   );
 };

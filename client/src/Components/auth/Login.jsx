@@ -3,10 +3,14 @@ import "./Login.css";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import {  loginUser, loginUserName } from "../../Redux/action.js";
 import "react-toastify/dist/ReactToastify.css";
 
 
 export const Login = () => {
+  const userdata = useSelector((state) => state.dailytasks.user);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [user, setUser] = useState({
     email: "",
@@ -31,11 +35,13 @@ export const Login = () => {
   };
 
   const login = () => {
+
     axios
       .post("http://localhost:3755/login", user)
       .then((res) => {
         // console.log("login",res.data);
-        localStorage.setItem("user",JSON.stringify(res.data.user));
+
+        dispatch(loginUser(res.data.user))
         toast("Login successfully", {
           type: "success",
         });

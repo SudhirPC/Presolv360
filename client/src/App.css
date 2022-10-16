@@ -3,10 +3,10 @@
     margin: auto;
 }
 .navbar{
-    background: linear-gradient(to right, #ff5654, #ffdcdc);
+    background: linear-gradient(to right, #f44744, #ffdcdc);
 }
 .dashboard{
-    background: linear-gradient(to right, #ff5654, #ffdcdc);
+    background: linear-gradient(to right, #f47370, #ffdcdc);
     align-items: center;
     margin: auto;
     margin-top:25px;
@@ -14,7 +14,7 @@
 
 }
 .dashboardtop{
- background: linear-gradient(to right, #ff5654, #ffdcdc);
+ background: linear-gradient(to right, #f07b79, #ffdcdc);
     align-items: center;
     margin: auto;
     margin-top:25px;

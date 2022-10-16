@@ -117,7 +117,7 @@ const validateForm = (user) => {
               />
             </div>
             <div className="loginButtonDiv">
-              <button className="loginButton -mt-4" onClick={() => register()}>
+              <button className="loginButton -mt-6" onClick={() => register()}>
                 Register
               </button>
             </div>

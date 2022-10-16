@@ -1,10 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useDispatch, useSelector } from "react-redux";
 
 export const TaskForm = (props) => {
+  const userdata = useSelector((state) => state.dailytasks.user);
   console.log(props,"PROPS")
+let navigate=useNavigate()
 
   const [user, setUsersetData] = useState(null);
   //id added
@@ -36,8 +40,9 @@ export const TaskForm = (props) => {
 
   const AddTask = () => {
     axios
-      .post(`http://localhost:3755/taskadd/${user._id}`, postobj)
+      .post(`http://localhost:3755/taskadd/${userdata?._id}`, postobj)
       .then((res) => {
+        
         console.log(res.data);
         // setTrigger(true)
         toast("Task Added successfully", {
@@ -45,17 +50,19 @@ export const TaskForm = (props) => {
           
         });
         
-      }).then((res) => {
-        props.setVisible(false);
-        fetchTask()
+        
       })
       .catch(function (err) {
         toast("Something is Wrong", {
           type: "error",
         });
       });
-   
+      
   };
+
+  const navigatetodashboard=()=>{
+    navigate("/dashboard");
+  }
   const fetchTask = () => {
     setUsersetData(JSON.parse(localStorage.getItem("user")));
 
@@ -63,7 +70,7 @@ export const TaskForm = (props) => {
   console.log("formuserdataloggedin", user);
   useEffect(() => {
     fetchTask();
-  }, [user]);
+  }, []);
 
 
   const validateForm = (postobj) => {
@@ -195,6 +202,7 @@ export const TaskForm = (props) => {
                   className="loginButton"
                   onClick={() => {
                     AddTask();
+                    navigatetodashboard()
                   }}
                 >
                   Add Task
