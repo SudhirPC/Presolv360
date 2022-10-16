@@ -28,6 +28,7 @@ export const DailyTasks = (state = init, action) => {
         ...state,
         userId: null,
         userName: null,
+        user:null
       };
 
     default:
